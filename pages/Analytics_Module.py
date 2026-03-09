@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 from wordcloud import WordCloud
 import ast
+import os
 
 
 st.set_page_config(
@@ -20,10 +21,26 @@ st.caption(
 
 # Data Load
 
-DATA_PATH = r"C:\Users\Jay Patel\Campusx\ml_projects\PropNavigator\data\analytics_module\gurgaon_property_geomap.csv"
-WC_PATH   = r"C:\Users\Jay Patel\Campusx\ml_projects\PropNavigator\data\analytics_module\wordcloud.csv"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "analytics_module",
+    "gurgaon_property_geomap.csv"
+)
+
+WC_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "analytics_module",
+    "wordcloud.csv"
+)
+
+# Load Data
 
 df = pd.read_csv(DATA_PATH)
+wc_df = pd.read_csv(WC_PATH)[["sector", "features_list"]]
 
 st.divider()
 
@@ -314,9 +331,6 @@ st.info(
 st.plotly_chart(fig_map, use_container_width=True)
 
 # Section : 7 - Amenities Wordcloud 
-
-
-wc_df = pd.read_csv(WC_PATH)[["sector", "features_list"]]
 
 
 sector = st.selectbox(
