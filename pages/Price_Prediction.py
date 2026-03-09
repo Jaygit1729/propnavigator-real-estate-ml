@@ -105,7 +105,7 @@ with col2:
     total_area = st.number_input(
         "Total Area (Sqft)",
         min_value=300.0,
-        value=1200.0,
+        value=800.0,
         step=50.0
     )
 
