@@ -158,9 +158,7 @@ def run_model_building(fs_df):
         logger.info(f"Best Tuned Model: {best_model_name}")
         logger.info(f"Best Test MAPE: {round(best_test_mape * 100, 2)}%")
 
-        # --------------------------------------------------
-        # 5️⃣ Save Best Model
-        # --------------------------------------------------
+        # 5. Save Best Model
 
         save_model(
             model_pipeline=best_pipeline,

@@ -2,20 +2,37 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import os
 
-# Load data
-df = pd.read_csv(r"C:\Users\Jay Patel\Campusx\ml_projects\PropNavigator\data\fs\feature_selected_properties.csv")
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-BASE_PRICE = df["price_in_cr"].median() * 1e7
+DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "fs",
+    "feature_selected_properties.csv"
+)
 
-# Load regression coefficients
-coef_df = pd.read_csv(r"C:\Users\Jay Patel\Campusx\ml_projects\PropNavigator\notebooks\insight_module\insight_coefficients.csv")
+COEF_PATH = os.path.join(
+    BASE_DIR,
+    "notebooks",
+    "insight_module",
+    "insight_coefficients.csv"
+)
 
+# Load Data
+
+df = pd.read_csv(DATA_PATH)
+
+coef_df = pd.read_csv(COEF_PATH)
 COEFS = dict(zip(coef_df["feature"], coef_df["coef"]))
 
 st.header("📊 Pricing Insights")
 
 # Area Impact
+
+BASE_PRICE = df["price_in_cr"].median() * 1e7
+
 
 st.subheader("📐 Impact of Area Increase")
 

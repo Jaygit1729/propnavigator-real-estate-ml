@@ -2,30 +2,41 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
+import os
 
 # 1. Page Configuration
 
 st.set_page_config(page_title="PropNavigator | Recommend Apartments", layout="wide")
 
+#
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+RECOMMENDER_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "recommender"
+)
+
+
 # 2. Cached Data Loading
 
 @st.cache_resource
 def load_data():
-    
-    base_path = r'C:\Users\Jay Patel\Campusx\ml_projects\PropNavigator\data\recommender'
-    
-    # Loading your DataFrames
-    
-    location_df = pickle.load(open(f'{base_path}\\location_distance.pkl', 'rb'))
-    price_df = pickle.load(open(f'{base_path}\\price_df.pkl', 'rb')) 
-    
-    
+
+    base_path = RECOMMENDER_PATH
+
+    # Loading DataFrames
+
+    location_df = pickle.load(open(os.path.join(base_path, "location_distance.pkl"), "rb"))
+    price_df = pickle.load(open(os.path.join(base_path, "price_df.pkl"), "rb"))
+
     # Loading Similarity Matrices
 
-    sim_features = pickle.load(open(f'{base_path}\\cosine_sim_top_features.pkl', 'rb'))
-    sim_price = pickle.load(open(f'{base_path}\\cosine_sim_price.pkl', 'rb'))
-    sim_location = pickle.load(open(f'{base_path}\\cosine_sim_location.pkl', 'rb'))
-    
+    sim_features = pickle.load(open(os.path.join(base_path, "cosine_sim_top_features.pkl"), "rb"))
+    sim_price = pickle.load(open(os.path.join(base_path, "cosine_sim_price.pkl"), "rb"))
+    sim_location = pickle.load(open(os.path.join(base_path, "cosine_sim_location.pkl"), "rb"))
+
     return location_df, price_df, sim_features, sim_price, sim_location
 
 location_df, price_df, cosine_sim_top_features, cosine_sim_price, cosine_sim_location = load_data()
